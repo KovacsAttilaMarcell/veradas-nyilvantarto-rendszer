@@ -1,0 +1,1 @@
+# veradas-nyilvantarto-rendszer

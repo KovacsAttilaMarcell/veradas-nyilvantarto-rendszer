@@ -1,0 +1,36 @@
+<div class="container mt-4">
+  <h2>Bejelentkezés</h2>
+
+  <div class="card p-3">
+    <input
+      class="form-control mb-2"
+      type="email"
+      placeholder="Email"
+      [(ngModel)]="form.email"
+      name="email"
+    />
+
+    <input
+      class="form-control mb-2"
+      type="password"
+      placeholder="Jelszó"
+      [(ngModel)]="form.password"
+      name="password"
+    />
+
+    @if (errorMessage) {
+      <div class="alert alert-danger">
+        {{ errorMessage }}
+      </div>
+    }
+
+    <button
+      type="button"
+      class="btn btn-primary"
+      (click)="login()"
+      [disabled]="isSubmitting"
+    >
+      Bejelentkezés
+    </button>
+  </div>
+</div>

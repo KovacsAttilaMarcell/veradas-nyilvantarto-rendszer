@@ -1,0 +1,98 @@
+<div class="container mt-4">
+  <h2>Véradók</h2>
+
+  @if (authService.isLoggedIn()) {
+  <div class="card p-3 mb-3">
+    <h5>Új véradó</h5>
+
+    <input
+      class="form-control mb-2"
+      placeholder="Név"
+      [(ngModel)]="newDonor.name"
+      name="name"
+    />
+
+    <select
+      class="form-select mb-2"
+      [(ngModel)]="newDonor.gender"
+      name="gender"
+    >
+      <option value="">Válassz nemet</option>
+      <option value="férfi">Férfi</option>
+      <option value="nő">Nő</option>
+    </select>
+
+    <input
+      class="form-control mb-2"
+      placeholder="Állampolgárság"
+      [(ngModel)]="newDonor.citizenship"
+      name="citizenship"
+    />
+
+    <input
+      class="form-control mb-2"
+      placeholder="Születési hely"
+      [(ngModel)]="newDonor.birthPlace"
+      name="birthPlace"
+    />
+
+    <input
+      class="form-control mb-2"
+      type="date"
+      [(ngModel)]="newDonor.birthDate"
+      name="birthDate"
+    />
+
+    <input
+      class="form-control mb-2"
+      placeholder="Lakcím"
+      [(ngModel)]="newDonor.address"
+      name="address"
+    />
+
+    <input
+      class="form-control mb-2"
+      placeholder="TAJ szám"
+      [(ngModel)]="newDonor.tajNumber"
+      name="tajNumber"
+    />
+
+    @if (errorMessage) {
+      <div class="alert alert-danger">
+        {{ errorMessage }}
+      </div>
+    }
+
+    <button type="button" class="btn btn-primary" (click)="addDonor()" [disabled]="isSubmitting">
+      Hozzáadás
+    </button>
+  </div>
+}
+
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Név</th>
+        <th>Nem</th>
+        <th>Állampolgárság</th>
+        <th>Születési hely</th>
+        <th>Születési idő</th>
+        <th>Lakcím</th>
+        <th>TAJ</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let donor of donors">
+        <td>{{ donor.id }}</td>
+        <td>{{ donor.name }}</td>
+        <td>{{ donor.gender }}</td>
+        <td>{{ donor.citizenship }}</td>
+        <td>{{ donor.birthPlace }}</td>
+        <td>{{ donor.birthDate }}</td>
+        <td>{{ donor.address }}</td>
+        <td>{{ donor.tajNumber }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

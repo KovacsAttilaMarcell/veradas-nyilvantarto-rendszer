@@ -1,0 +1,91 @@
+<div class="container mt-4">
+  <h2>Sikeres véradások</h2>
+
+  <div class="card p-3 mb-4">
+    <h5>Szűrés</h5>
+
+    <div class="row">
+      <div class="col-md-3 mb-3">
+        <label class="form-label">Helyszín</label>
+        <select class="form-select" [(ngModel)]="filters.locationId" name="locationId">
+          <option [ngValue]="0">Összes helyszín</option>
+          <option *ngFor="let location of locations" [ngValue]="location.id">
+            {{ location.institutionName }}
+          </option>
+        </select>
+      </div>
+
+      <div class="col-md-3 mb-3">
+        <label class="form-label">Véradó</label>
+        <select class="form-select" [(ngModel)]="filters.donorId" name="donorId">
+          <option [ngValue]="0">Összes véradó</option>
+          <option *ngFor="let donor of donors" [ngValue]="donor.id">
+            {{ donor.name }}
+          </option>
+        </select>
+      </div>
+
+      <div class="col-md-3 mb-3">
+        <label class="form-label">Kezdő dátum</label>
+        <input
+          type="date"
+          class="form-control"
+          [(ngModel)]="filters.startDate"
+          name="startDate"
+        />
+      </div>
+
+      <div class="col-md-3 mb-3">
+        <label class="form-label">Záró dátum</label>
+        <input
+          type="date"
+          class="form-control"
+          [(ngModel)]="filters.endDate"
+          name="endDate"
+        />
+      </div>
+    </div>
+
+    <div class="d-flex gap-2">
+      <button type="button" class="btn btn-primary" (click)="applyFilters()">
+        Szűrés
+      </button>
+      <button type="button" class="btn btn-secondary" (click)="resetFilters()">
+        Szűrők törlése
+      </button>
+    </div>
+  </div>
+
+  <table class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Dátum</th>
+        <th>Helyszín</th>
+        <th>Véradó</th>
+        <th>Orvos</th>
+        <th>Irányított</th>
+        <th>Beteg neve</th>
+        <th>Beteg TAJ</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let donation of donations">
+        <td>{{ donation.id }}</td>
+        <td>{{ donation.donationDate }}</td>
+        <td>{{ donation.location.institutionName }}</td>
+        <td>{{ donation.donor.name }}</td>
+        <td>{{ donation.doctorName }}</td>
+        <td>{{ donation.directed ? 'Igen' : 'Nem' }}</td>
+        <td>{{ donation.patientName || '-' }}</td>
+        <td>{{ donation.patientTajNumber || '-' }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  @if (donations.length === 0) {
+    <div class="alert alert-info">
+      Nincs a feltételeknek megfelelő sikeres véradás.
+    </div>
+  }
+</div>

@@ -1,0 +1,32 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+    <a class="navbar-brand" routerLink="/locations">Véradás rendszer</a>
+
+    <div class="navbar-nav">
+      <a class="nav-link" routerLink="/locations">Helyszínek</a>
+      <a class="nav-link" routerLink="/donors">Véradók</a>
+      <a class="nav-link" routerLink="/view-donations">Véradások</a>
+
+      @if (authService.isLoggedIn()) {
+        <a class="nav-link" routerLink="/add-donation">Új véradás</a>
+      }
+
+      @if (!authService.isLoggedIn()) {
+        <a class="nav-link" routerLink="/register">Regisztráció</a>
+        <a class="nav-link" routerLink="/login">Bejelentkezés</a>
+      }
+
+      @if (authService.isLoggedIn()) {
+        <span class="nav-link text-light">
+          {{ authService.getUserEmail() }}
+        </span>
+
+        <button class="btn btn-outline-light btn-sm ms-2" (click)="logout()">
+          Kijelentkezés
+        </button>
+      }
+    </div>
+  </div>
+</nav>
+
+<router-outlet></router-outlet>

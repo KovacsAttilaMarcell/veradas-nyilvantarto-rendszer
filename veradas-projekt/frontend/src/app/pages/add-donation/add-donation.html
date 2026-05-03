@@ -1,0 +1,119 @@
+<div class="container mt-4">
+  <h2>Véradás rögzítése</h2>
+
+  <div class="card p-3">
+    <div class="mb-3">
+      <label class="form-label">Helyszín</label>
+      <select class="form-select" [(ngModel)]="donationForm.locationId" name="locationId">
+        <option [ngValue]="0">Válassz helyszínt</option>
+        <option *ngFor="let location of locations" [ngValue]="location.id">
+          {{ location.institutionName }} - {{ location.address }}
+          {{ location.active ? '' : '(Inaktív)' }}
+        </option>
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Véradó</label>
+      <select class="form-select" [(ngModel)]="donationForm.donorId" name="donorId">
+        <option [ngValue]="0">Válassz véradót</option>
+        <option *ngFor="let donor of donors" [ngValue]="donor.id">
+          {{ donor.name }} - TAJ: {{ donor.tajNumber }}
+        </option>
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Véradás napja</label>
+      <input
+        type="date"
+        class="form-control"
+        [(ngModel)]="donationForm.donationDate"
+        name="donationDate"
+      />
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Alkalmas véradásra?</label>
+      <select
+        class="form-select"
+        [(ngModel)]="donationForm.eligible"
+        (ngModelChange)="onEligibleChange()"
+        name="eligible"
+      >
+        <option [ngValue]="true">Igen</option>
+        <option [ngValue]="false">Nem</option>
+      </select>
+    </div>
+
+    @if (!donationForm.eligible) {
+      <div class="mb-3">
+        <label class="form-label">Alkalmatlanság oka</label>
+        <input
+          class="form-control"
+          [(ngModel)]="donationForm.ineligibleReason"
+          name="ineligibleReason"
+        />
+      </div>
+    }
+
+    <div class="mb-3">
+      <label class="form-label">Vizsgálatot végző orvos neve</label>
+      <input
+        class="form-control"
+        [(ngModel)]="donationForm.doctorName"
+        name="doctorName"
+      />
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Irányított véradás?</label>
+      <select
+        class="form-select"
+        [(ngModel)]="donationForm.directed"
+        (ngModelChange)="onDirectedChange()"
+        [disabled]="!donationForm.eligible"
+        name="directed"
+      >
+        <option [ngValue]="false">Nem</option>
+        <option [ngValue]="true">Igen</option>
+      </select>
+    </div>
+
+    @if (donationForm.directed) {
+      <div class="mb-3">
+        <label class="form-label">Beteg teljes neve</label>
+        <input
+          class="form-control"
+          [(ngModel)]="donationForm.patientName"
+          name="patientName"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Beteg TAJ száma</label>
+        <input
+          class="form-control"
+          [(ngModel)]="donationForm.patientTajNumber"
+          name="patientTajNumber"
+        />
+      </div>
+    }
+
+    @if (errorMessage) {
+      <div class="alert alert-danger">
+        {{ errorMessage }}
+      </div>
+    }
+
+    @if (successMessage) {
+      <div class="alert alert-success">
+        {{ successMessage }}
+      </div>
+    }
+
+    <button type="button" class="btn btn-primary" (click)="addDonation()" [disabled]="isSubmitting">
+      Véradás rögzítése
+    </button>
+  </div>
+</div>

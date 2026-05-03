@@ -1,0 +1,72 @@
+<div class="container mt-4">
+  <h2>Helyszínek</h2>
+
+ @if (authService.isLoggedIn()) {
+  <div class="card p-3 mb-3">
+    <h5>Új helyszín</h5>
+
+    <input
+      class="form-control mb-2"
+      placeholder="Intézmény neve"
+      [(ngModel)]="newLocation.institutionName"
+    />
+
+    <input
+      class="form-control mb-2"
+      placeholder="Cím"
+      [(ngModel)]="newLocation.address"
+    />
+
+    <button
+      type="button"
+      class="btn btn-primary"
+      (click)="addLocation()"
+      [disabled]="isSubmitting"
+    >
+      Hozzáadás
+    </button>
+  </div>
+}
+
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Intézmény</th>
+        <th>Cím</th>
+        <th>Állapot</th>
+        @if (authService.isLoggedIn()) {
+        <th>Művelet</th>
+      }
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let loc of locations">
+        <td>{{ loc.id }}</td>
+        <td>{{ loc.institutionName }}</td>
+        <td>{{ loc.address }}</td>
+        <td>
+          <span
+            class="badge"
+            [ngClass]="loc.active ? 'bg-success' : 'bg-danger'"
+          >
+            {{ loc.active ? 'Aktív' : 'Inaktív' }}
+          </span>
+        </td>
+        @if (authService.isLoggedIn()) {
+        <td>
+          <button
+            type="button"
+            class="btn btn-sm"
+            [ngClass]="loc.active ? 'btn-danger' : 'btn-success'"
+            (click)="toggleActive(loc)"
+            [disabled]="isSubmitting"
+          >
+            {{ loc.active ? 'Inaktivál' : 'Aktivál' }}
+          </button>
+        </td>
+      }
+      </tr>
+    </tbody>
+  </table>
+</div>

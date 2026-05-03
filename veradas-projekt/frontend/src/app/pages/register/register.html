@@ -1,0 +1,42 @@
+<div class="container mt-4">
+  <h2>Regisztráció</h2>
+
+  <div class="card p-3">
+    <input
+      class="form-control mb-2"
+      type="email"
+      placeholder="Email"
+      [(ngModel)]="form.email"
+      name="email"
+    />
+
+    <input
+      class="form-control mb-2"
+      type="password"
+      placeholder="Jelszó"
+      [(ngModel)]="form.password"
+      name="password"
+    />
+
+    @if (errorMessage) {
+      <div class="alert alert-danger">
+        {{ errorMessage }}
+      </div>
+    }
+
+    @if (successMessage) {
+      <div class="alert alert-success">
+        {{ successMessage }}
+      </div>
+    }
+
+    <button
+      type="button"
+      class="btn btn-primary"
+      (click)="register()"
+      [disabled]="isSubmitting"
+    >
+      Regisztráció
+    </button>
+  </div>
+</div>
